@@ -2,7 +2,6 @@ from datetime import date
 from flask_restful import Resource
 from flask import request
 from flask_security import auth_required, roles_required, current_user
-from extensions import cache 
 
 from model import db, User, Role, Dept, Appointments, Treatments, DoctorAvailability
 
