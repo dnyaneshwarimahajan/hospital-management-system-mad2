@@ -4,11 +4,8 @@ class Config():
 
 class LocalDevelopementConfig(Config):
 
-    # Database
     SQLALCHEMY_DATABASE_URI = "sqlite:///hospital_data.db"
     DEBUG = True
-
-    # Security
     SECRET_KEY = "this-is-secretkey"
     SECURITY_PASSWORD_HASH = "pbkdf2_sha512"
     SECURITY_PASSWORD_SALT = "this-is-a-password-salt"

@@ -12,16 +12,16 @@ FROM_EMAIL = 'dnyaneshwarirmahajan@gmail.com'
 def send_email(to_email, subject, body, attachment=None, filename=None):
     msg = MIMEMultipart('mixed')
     msg['Subject'] = subject
-    msg['From']    = FROM_EMAIL
-    msg['To']      = to_email
+    msg['From'] = FROM_EMAIL
+    msg['To'] = to_email
 
     msg.attach(MIMEText(body, 'html'))
 
     if attachment and filename:
-        part = MIMEBase('text', 'csv')                          # ✅ explicit csv type
+        part = MIMEBase('text', 'csv')                          
         part.set_payload(attachment.encode('utf-8'))
         encoders.encode_base64(part)
-        part.add_header('Content-Disposition', f'attachment; filename="{filename}"')  # ✅ quoted
+        part.add_header('Content-Disposition', f'attachment; filename="{filename}"')  
         part.add_header('Content-Type', 'text/csv; charset=utf-8')
         msg.attach(part)
 
