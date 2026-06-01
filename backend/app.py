@@ -20,16 +20,14 @@ def create_app():
 
     db.init_app(app)
 
-    frontend_url = os.environ.get("FRONTEND_URL", "")
-    allowed_origins = ["http://localhost:5173"]
-    if frontend_url:
-        allowed_origins.append(frontend_url)
-
     CORS(app,
-         origins=allowed_origins,
-         supports_credentials=True,
-         methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-         allow_headers=["Content-Type", "Authentication-Token"])
+     origins=[
+         "http://localhost:5173",
+         "https://hospital-management-system-mad2.vercel.app"
+     ],
+     supports_credentials=True,
+     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+     allow_headers=["Content-Type", "Authentication-Token"])
 
     Security(app, user_database)
 
