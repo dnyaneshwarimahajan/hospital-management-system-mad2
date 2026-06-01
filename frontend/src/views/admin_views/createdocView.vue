@@ -79,7 +79,7 @@ function authHeaders() {
 async function fetchDepartments() {
   loadingDepts.value = true;
   try {
-    const res = await fetch("import.meta.env.VITE_API_BASE_URL/api/admin/departments", {
+    const res = await fetch("https://hms-backend-cvcn.onrender.com/api/admin/departments", {
       headers: authHeaders(),
     });
     const data = await res.json();
@@ -113,7 +113,7 @@ async function createDoctor() {
   };
 
   try {
-    const res = await fetch("import.meta.env.VITE_API_BASE_URL/api/admin/create-doctor", {
+    const res = await fetch("https://hms-backend-cvcn.onrender.com/api/admin/create-doctor", {
       method: "POST",
       headers: authHeaders(),
       body: JSON.stringify(payload),

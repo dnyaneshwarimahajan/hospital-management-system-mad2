@@ -37,7 +37,7 @@ import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
 const router = useRouter();
-const BASE = "import.meta.env.VITE_API_BASE_URL";
+const BASE = "https://hms-backend-cvcn.onrender.com";
 
 const appointmentId = route.params.id;
 const patientName = ref("");

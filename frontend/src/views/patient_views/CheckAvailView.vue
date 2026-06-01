@@ -77,7 +77,7 @@ import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
 const route = useRoute();
-const BASE = "import.meta.env.VITE_API_BASE_URL";
+const BASE = "https://hms-backend-cvcn.onrender.com";
 
 const doctorId = route.params.id;
 const rescheduleId = route.query.reschedule || null;

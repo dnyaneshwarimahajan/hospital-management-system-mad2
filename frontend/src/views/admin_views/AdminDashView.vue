@@ -137,7 +137,7 @@
 </template>
 
 <script setup>
-const BASE = import.meta.env.VITE_API_BASE_URL
+const BASE = "https://hms-backend-cvcn.onrender.com"
 // const BASE = "http://127.0.0.1:5000"
 
 import { ref, onMounted, computed, onActivated } from "vue";

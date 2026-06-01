@@ -72,7 +72,7 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const BASE = "import.meta.env.VITE_API_BASE_URL";
+const BASE = "https://hms-backend-cvcn.onrender.com";
 
 const doctor = ref({ name: "" });
 const weekAppointments = ref([]);

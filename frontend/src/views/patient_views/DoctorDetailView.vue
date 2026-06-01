@@ -35,7 +35,7 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
-const BASE = "import.meta.env.VITE_API_BASE_URL";
+const BASE = "https://hms-backend-cvcn.onrender.com";
 const doctorId = route.params.id;
 
 const doctor = ref({

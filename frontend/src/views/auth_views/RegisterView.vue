@@ -27,7 +27,7 @@ function validatePassword() {
 
 function checkEmailAvailibility() {
 
-    fetch('import.meta.env.VITE_API_BASE_URL/api/check-email',
+    fetch('https://hms-backend-cvcn.onrender.com/api/check-email',
     {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -50,7 +50,7 @@ function checkEmailAvailibility() {
 
 function checkUsernameAvailibility() {
 
-    fetch('import.meta.env.VITE_API_BASE_URL/api/check-username',{
+    fetch('https://hms-backend-cvcn.onrender.com/api/check-username',{
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ username: username.value })
@@ -84,7 +84,7 @@ async function register(){
         password: password.value
     }
 
-    const response = await fetch('import.meta.env.VITE_API_BASE_URL/api/register',{
+    const response = await fetch('https://hms-backend-cvcn.onrender.com/api/register',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify(user)

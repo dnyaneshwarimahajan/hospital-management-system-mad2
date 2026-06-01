@@ -65,7 +65,7 @@ import { useRouter } from "vue-router";
 import { ref, computed, onMounted } from "vue";
 
 const router = useRouter();
-const BASE = "import.meta.env.VITE_API_BASE_URL";
+const BASE = "https://hms-backend-cvcn.onrender.com";
 
 const patientName = ref(localStorage.getItem("name") || "Patient");
 const departments = ref([]);
