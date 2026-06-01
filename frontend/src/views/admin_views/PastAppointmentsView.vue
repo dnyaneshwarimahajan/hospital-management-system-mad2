@@ -1,21 +1,15 @@
 <template>
   <div class="container">
 
-    <!-- Header -->
     <div class="card">
-      <button class="btn btn_create back-btn" @click="$router.push('/admin')">← Back</button>
+      <RouterLink to="/admin" class="btn btn_create back-btn">Back</RouterLink>
       <h2 class="admin">Appointment History</h2>
-      <div class="user-meta">Admin — Full appointment records</div>
+      <div class="user-meta">Admin Full appointment records</div>
     </div>
 
-    <!-- Filters -->
     <div class="card">
       <div class="filters">
-        <input
-          v-model="search"
-          placeholder="Search by patient or doctor..."
-          class="search-input"
-        />
+        <input v-model="search" placeholder="Search by patient or doctor"class="search-input"/>
         <select v-model="statusFilter" class="filter-select">
           <option value="">All Statuses</option>
           <option value="booked">Booked</option>
@@ -25,7 +19,6 @@
       </div>
     </div>
 
-    <!-- Table -->
     <div class="card" style="margin-top:14px;">
       <h4 style="margin-bottom:10px;">
         All Appointments
@@ -67,12 +60,7 @@
               <td>{{ a.diagnosis || '-' }}</td>
               <td>{{ a.treatment || '-' }}</td>
               <td>
-                <button
-                  class="btn btn_create"
-                  @click="$router.push(`/patient-history/${a.patient_id}`)"
-                >
-                  View
-                </button>
+                <RouterLink :to="`/patient-history/${a.patient_id}`" class="btn btn_create">View</RouterLink>
               </td>
             </tr>
           </tbody>
@@ -88,7 +76,7 @@ import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 const router       = useRouter();
-const BASE         = "http://127.0.0.1:5000";
+const BASE         = "import.meta.env.VITE_API_BASE_URL";
 const appointments = ref([]);
 const search       = ref("");
 const statusFilter = ref("");
@@ -126,28 +114,85 @@ onMounted(fetchAppointments);
 
 <style scoped>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-.container  { max-width: 1100px; margin: 20px auto; padding: 18px; }
-.card       { background: #fbfbfbc7; padding: 16px; border-radius: 8px; border: 1px solid #e5e7eb; margin-bottom: 16px; }
-.card h4    { color: #61052d; }
-.admin      { color: #054145; margin-top: 6px; }
-.user-meta  { color: #3559a1; font-size: 0.9rem; margin-top: 3px; }
-.muted      { color: #6b7280; font-size: 0.9rem; }
-.back-btn   { margin-bottom: 10px; }
+.container
+  { max-width: 1100px; 
+    margin: 10px auto; 
+    padding: 18px; }
+.card      
+ { background: #fbfbfbc7; 
+  padding: 16px; 
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+   margin-bottom: 16px; }
+.card h4    
+{ color: #61052d; }
+.admin      
+{ color: #054145;
+   margin-top: 6px; }
+.user-meta  
+{ color: #3559a1; 
+  font-size: 0.9rem; 
+  margin-top: 3px; }
+.muted      
+{ color: #6b7280;
+   font-size: 0.9rem; }
+.back-btn   
+{ margin-bottom: 10px; }
 
-.filters       { display: flex; gap: 12px; flex-wrap: wrap; }
-.search-input  { flex: 1; min-width: 200px; padding: 8px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 0.95rem; }
-.filter-select { padding: 8px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 0.95rem; }
+.filters      
+ { display: flex; 
+  gap: 12px; 
+  flex-wrap: wrap; }
+.search-input  
+{ flex: 1; min-width: 200px;
+   padding: 8px 12px; border:
+    1px solid #ccc; 
+    border-radius: 6px; 
+    font-size: 0.95rem; }
+.filter-select 
+{ padding: 8px 12px; 
+  border: 1px solid #ccc; 
+  border-radius: 6px; 
+  font-size: 0.95rem; 
+}
 
-.table            { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
-.table th         { background: #054145; color: white; padding: 10px 8px; text-align: left; }
-.table td         { padding: 9px 8px; border-bottom: 1px solid #e5e7eb; }
+.table            
+{ width: 100%;
+   border-collapse: collapse;
+    font-size: 0.92rem; }
+.table th        
+ { background: #054145;
+   color: white; padding: 10px 6px; 
+   text-align: left; }
+.table td         
+{ padding: 9px 8px;
+   border-bottom: 1px solid #e5e7eb; }
 .table tr:hover td { background: #eaf3f7; }
 
-.badge-status           { padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: capitalize; }
-.badge-status.booked    { background: #dbeafe; color: #1d4ed8; }
-.badge-status.completed { background: #d1fae5; color: #065f46; }
-.badge-status.cancelled { background: #fee2e2; color: #991b1b; }
+.badge-status     
+      { padding: 3px 10px;
+         border-radius: 12px; 
+         font-size: 11px;
+         font-weight: 600;
+          text-transform: capitalize; }
+.badge-status.booked  
+  { background: #dbeafe; 
+    color: #1d4ed8; }
+.badge-status.completed {
+   background: #d1fae5; 
+   color: #065f46; }
+.badge-status.cancelled {
+   background: #fee2e2;
+    color: #991b1b; }
 
-.btn        { padding: 6px 12px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 0.9rem; }
-.btn_create { background-color: #052c2fe2; color: white; }
+.btn        { 
+  padding: 6px 12px;
+   border-radius: 8px;
+    border: none; 
+    cursor: pointer;
+     font-weight: 600; 
+     font-size: 0.9rem; }
+.btn_create { 
+  background-color: #052c2fe2; 
+  color: white; }
 </style>

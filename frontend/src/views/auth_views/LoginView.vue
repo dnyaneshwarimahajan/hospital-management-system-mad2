@@ -21,7 +21,7 @@ async function login() {
     loading.value = true;
 
     try {
-        const response = await fetch("http://127.0.0.1:5000/api/login", {
+        const response = await fetch("import.meta.env.VITE_API_BASE_URL/api/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -73,29 +73,18 @@ async function login() {
     <form @submit.prevent="login">
 
       <label>Username</label>
-      <input
-        type="text"
-        class="input"
-        placeholder="Enter username"
-        v-model="username"
-      />
-
+      <input type="text" class="input" placeholder="Enter username" v-model="username"/>
       <label>Password</label>
-      <input
-        type="password"
-        class="input"
-        placeholder="Enter password"
-        v-model="password"
-      />
-
+      <input type="password" class="input" placeholder="Enter password" v-model="password"/>
       <button type="submit" class="btn">Login</button>
 
     </form>
 
     <div class="register">
-      Don't have an account? <a href="/register">Register</a>
+        Don't have an account? <RouterLink to="/register">Register</RouterLink>
     </div>
   </div>
+
 </template>
 
 <style scoped>

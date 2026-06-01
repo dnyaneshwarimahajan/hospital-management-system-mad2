@@ -1,7 +1,7 @@
 <template>
   <div class="container1">
 
-    <h3>Update Patient History — {{ patientName }}</h3>
+    <h3>Update Patient History {{ patientName }}</h3>
 
     <div v-if="errorMsg" style="color:red; text-align:center; margin-bottom:8px;">{{ errorMsg }}</div>
     <div v-if="successMsg" style="color:green; text-align:center; margin-bottom:8px;">{{ successMsg }}</div>
@@ -23,7 +23,7 @@
 
     <div>
       <button @click="save" :disabled="loading">
-        {{ loading ? 'Saving...' : 'Save' }}
+        {{ loading ? 'Saving' : 'Save' }}
       </button>
       <a class="back-link" @click="$router.push('/doctor')">Back</a>
     </div>
@@ -37,7 +37,7 @@ import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
 const router = useRouter();
-const BASE = "http://127.0.0.1:5000";
+const BASE = "import.meta.env.VITE_API_BASE_URL";
 
 const appointmentId = route.params.id;
 const patientName = ref("");

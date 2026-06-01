@@ -1,6 +1,6 @@
 <template>
   <div class="form-container">
-    <h2 class="form-title">Create New Doctor</h2>
+    <h2 class="form-title"> Create New Doctor</h2>
 
     <div v-if="errorMsg" class="alert error">{{ errorMsg }}</div>
     <div v-if="successMsg" class="alert success">{{ successMsg }}</div>
@@ -23,42 +23,27 @@
 
       <div class="input-group">
         <label>Select Existing Department</label>
-        <!-- FIX 3: Dynamic departments fetched from backend -->
         <select class="input" v-model="departmentId" :disabled="!!newDepartmentName">
-          <option value="">-- Select existing department --</option>
-          <option v-for="dept in departments" :key="dept.id" :value="dept.id">
-            {{ dept.dept_name }}
-          </option>
+          <option value="">Select existing department</option>
+          <option v-for="dept in departments" :key="dept.id" :value="dept.id">{{ dept.dept_name }}</option>
         </select>
-        <small v-if="loadingDepts">Loading departments...</small>
+        <small v-if="loadingDepts">Loading departments</small>
       </div>
 
-      <div class="divider">OR create a new department</div>
-
+      <div class="divider">create a new department</div>
       <div class="input-group">
         <label>New Department Name</label>
-        <input
-          class="input"
-          type="text"
-          v-model="newDepartmentName"
-          :disabled="!!departmentId"
-          placeholder="Leave blank if selecting existing"
-        />
+        <input class="input" type="text" v-model="newDepartmentName":disabled="!!departmentId" placeholder="Leave blank if selecting existing"/>
       </div>
 
       <div class="input-group">
         <label>New Department Description</label>
-        <textarea
-          class="input"
-          v-model="newDepartmentDescription"
-          :disabled="!!departmentId"
-          placeholder="Leave blank if selecting existing"
-        ></textarea>
+        <textarea class="input" v-model="newDepartmentDescription" :disabled="!!departmentId" placeholder="Leave blank if selecting existing"></textarea>
       </div>
 
       <div class="btn-row">
         <button class="btn create" type="submit" :disabled="loading">
-          {{ loading ? 'Creating...' : 'Create Doctor' }}
+          {{ loading ? 'Creating' : 'Create Doctor' }}
         </button>
         <RouterLink class="btn btn-secondary" to="/admin">Cancel</RouterLink>
       </div>
@@ -71,7 +56,6 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-
 const username = ref("");
 const email = ref("");
 const password = ref("");
@@ -85,7 +69,6 @@ const loading = ref(false);
 const errorMsg = ref("");
 const successMsg = ref("");
 
-// ✅ FIX 2: Correct header name — "Authentication-Token" not "Authentication"
 function authHeaders() {
   return {
     "Content-Type": "application/json",
@@ -93,11 +76,10 @@ function authHeaders() {
   };
 }
 
-// ✅ FIX 3: Fetch real departments from backend on mount
 async function fetchDepartments() {
   loadingDepts.value = true;
   try {
-    const res = await fetch("http://127.0.0.1:5000/api/admin/departments", {
+    const res = await fetch("import.meta.env.VITE_API_BASE_URL/api/admin/departments", {
       headers: authHeaders(),
     });
     const data = await res.json();
@@ -114,8 +96,6 @@ onMounted(fetchDepartments);
 async function createDoctor() {
   errorMsg.value = "";
   successMsg.value = "";
-
-  // Must pick one: existing dept OR new dept name
   if (!departmentId.value && !newDepartmentName.value) {
     errorMsg.value = "Please select an existing department or enter a new department name.";
     return;
@@ -133,8 +113,7 @@ async function createDoctor() {
   };
 
   try {
-    // ✅ FIX 1: Correct URL — /api/admin/create-doctor not /api/admin/doctor
-    const res = await fetch("http://127.0.0.1:5000/api/admin/create-doctor", {
+    const res = await fetch("import.meta.env.VITE_API_BASE_URL/api/admin/create-doctor", {
       method: "POST",
       headers: authHeaders(),
       body: JSON.stringify(payload),
@@ -169,6 +148,7 @@ async function createDoctor() {
 .form-title {
   margin-bottom: 20px;
   text-align: center;
+
   color: #052c2f;
 }
 
@@ -225,6 +205,8 @@ textarea:disabled {
 }
 
 .divider::before { left: 0; }
+
+
 .divider::after  { right: 0; }
 
 .btn-row {

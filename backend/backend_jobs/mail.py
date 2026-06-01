@@ -4,9 +4,17 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
 
-SMTP_HOST  = 'localhost'
-SMTP_PORT  = 1025
-FROM_EMAIL = 'dnyaneshwarirmahajan@gmail.com'
+import os
+
+SMTP_HOST  = os.environ.get("SMTP_HOST", "smtp.gmail.com")
+SMTP_PORT  = int(os.environ.get("SMTP_PORT", 587))
+FROM_EMAIL = os.environ.get("FROM_EMAIL", "your@email.com")
+SMTP_USER  = os.environ.get("SMTP_USER", "")
+SMTP_PASS  = os.environ.get("SMTP_PASS", "")
+
+# SMTP_HOST  = 'localhost'
+# SMTP_PORT  = 1025
+# FROM_EMAIL = 'dnyaneshwarirmahajan@gmail.com'
 
 
 def send_email(to_email, subject, body, attachment=None, filename=None):
@@ -27,7 +35,11 @@ def send_email(to_email, subject, body, attachment=None, filename=None):
 
     try:
         with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
+            server.starttls()
+            server.login(SMTP_USER, SMTP_PASS)
             server.send_message(msg)
-        print(f"Email sent to {to_email}")
+        # with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
+        #     server.send_message(msg)
+        # print(f"Email sent to {to_email}")
     except Exception as e:
         print(f"Failed to send email to {to_email}: {e}")

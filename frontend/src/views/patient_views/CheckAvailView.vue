@@ -1,13 +1,12 @@
 <template>
   <div class="container">
-    <h2>Dr. {{ doctor.name }} – {{ rescheduleId ? 'Reschedule Appointment' : 'Book Appointment' }}</h2>
-    <p class="lead">Select a slot. Booked slots appear purple.</p>
+    <h2>Dr.{{ doctor.name }} {{ rescheduleId ? 'Reschedule Appointment' : 'Book Appointment' }}</h2>
+    <p class="lead">Select a slot</p>
 
     <div v-if="flashMsg" class="flash" :class="flashClass">{{ flashMsg }}</div>
 
     <div v-if="patientHasBooking" class="note">
       You already have one active booking. You cannot book another slot.
-      To view or cancel your appointment, go to your Appointments page.
     </div>
 
     <div class="row" v-for="r in grid" :key="r.date">
@@ -19,49 +18,49 @@
           v-if="isBooked(r.date, 'slot1')"
           class="slot-btn slot-booked"
           disabled
-        >{{ slotLabels.slot1 }} • Booked</button>
+        >{{ slotLabels.slot1 }} Booked</button>
 
         <button
           v-else-if="!r.slot_1"
           class="slot-btn slot-unavailable"
           disabled
-        >{{ slotLabels.slot1 }} • Unavailable</button>
+        >{{ slotLabels.slot1 }}Unavailable</button>
 
         <button
           v-else-if="patientHasBooking"
           class="slot-btn slot-unavailable"
           disabled
-        >{{ slotLabels.slot1 }} • Book</button>
+        >{{ slotLabels.slot1 }} Book</button>
 
         <button
           v-else
           class="slot-btn slot-available"
           @click="bookSlot(r.date, 'slot1')"
-        >{{ slotLabels.slot1 }} • Book</button>
+        >{{ slotLabels.slot1 }} Book</button>
 
         <button
           v-if="isBooked(r.date, 'slot2')"
           class="slot-btn slot-booked"
           disabled
-        >{{ slotLabels.slot2 }} • Booked</button>
+        >{{ slotLabels.slot2 }}Booked</button>
 
         <button
           v-else-if="!r.slot_2"
           class="slot-btn slot-unavailable"
           disabled
-        >{{ slotLabels.slot2 }} • Unavailable</button>
+        >{{ slotLabels.slot2 }}Unavailable</button>
 
         <button
           v-else-if="patientHasBooking"
           class="slot-btn slot-unavailable"
           disabled
-        >{{ slotLabels.slot2 }} • Book</button>
+        >{{ slotLabels.slot2 }} Book</button>
 
         <button
           v-else
           class="slot-btn slot-available"
           @click="bookSlot(r.date, 'slot2')"
-        >{{ slotLabels.slot2 }} • Book</button>
+        >{{ slotLabels.slot2 }} Book</button>
 
       </div>
     </div>
@@ -78,7 +77,7 @@ import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
 const route = useRoute();
-const BASE = "http://127.0.0.1:5000";
+const BASE = "import.meta.env.VITE_API_BASE_URL";
 
 const doctorId = route.params.id;
 const rescheduleId = route.query.reschedule || null;
@@ -210,15 +209,37 @@ onMounted(() => {
   background: #fff;
 }
 
-h2 { margin: 0 0 6px; font-size: 1.2rem; }
-p.lead { margin: 0 0 12px; color: #555; }
+h2 
+{ margin: 0 0 6px; 
+  font-size: 1.2rem;
+ }
+p.lead 
+{ margin: 0 0 12px; 
+  color: #555;
+ }
 
-.flash { padding: 10px; border-radius: 6px; margin-bottom: 8px; font-weight: 500; border: 1px solid #ddd; background: #fafafa; color:#111; }
-.flash.success { border-color:#cfeadf; background:#f7fff7; }
+.flash 
+{ padding: 10px;
+   border-radius: 6px;
+    margin-bottom: 8px;
+     font-weight: 500;
+      border: 1px solid #ddd;
+       background: #fafafa; 
+       color:#111; }
+.flash.success 
+{ border-color:#cfeadf; 
+  background:#f7fff7; }
 .flash.warning { border-color:#f3e2c7; background:#fffaf2; }
-.flash.danger  { border-color:#f4d7d7; background:#fff6f6; }
+.flash.danger 
+ { border-color:#f4d7d7;
+   background:#fff6f6; }
 
-.row { display:flex; gap:12px; align-items:center; margin:10px 0; flex-wrap:wrap; }
+.row { 
+  display:flex;
+   gap:12px; 
+   align-items:center; 
+   margin:10px 0; 
+   flex-wrap:wrap; }
 
 .date-box {
   min-width:120px;
@@ -230,7 +251,10 @@ p.lead { margin: 0 0 12px; color: #555; }
   background:#fafafa;
 }
 
-.slots { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+.slots { display:flex;
+   gap:8px; 
+   flex-wrap:wrap; 
+   align-items:center; }
 
 .slot-btn {
   padding:8px 10px;
@@ -242,10 +266,20 @@ p.lead { margin: 0 0 12px; color: #555; }
   font-size:0.95rem;
 }
 
-.slot-unavailable { background:#eee; color:#777; cursor:not-allowed; }
-.slot-booked      { background:#444; color:#fff; cursor:not-allowed; }
-.slot-available   { border-color:#2d8f6f; color:#0b5132; }
-.slot-available:hover { background:#f0fff8; }
+.slot-unavailable 
+{ background:#eee;
+   color:#777; 
+   cursor:not-allowed; }
+.slot-booked      
+{ background:#f55656; 
+  color:#fff; 
+  cursor:not-allowed; }
+.slot-available   
+
+{ border-color:#2d8f6f; 
+  color:#0b5132; }
+.slot-available:hover {
+   background:#f0fff8; }
 
 .note {
   margin:8px 0;

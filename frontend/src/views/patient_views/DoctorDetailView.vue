@@ -35,7 +35,7 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
-const BASE = "http://127.0.0.1:5000";
+const BASE = "import.meta.env.VITE_API_BASE_URL";
 const doctorId = route.params.id;
 
 const doctor = ref({

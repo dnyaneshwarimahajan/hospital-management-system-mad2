@@ -27,7 +27,7 @@ function validatePassword() {
 
 function checkEmailAvailibility() {
 
-    fetch('http://127.0.0.1:5000/api/check-email',
+    fetch('import.meta.env.VITE_API_BASE_URL/api/check-email',
     {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -50,7 +50,7 @@ function checkEmailAvailibility() {
 
 function checkUsernameAvailibility() {
 
-    fetch('http://127.0.0.1:5000/api/check-username',{
+    fetch('import.meta.env.VITE_API_BASE_URL/api/check-username',{
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ username: username.value })
@@ -72,21 +72,19 @@ function checkUsernameAvailibility() {
 
 async function register(){
 
-
     if (!validatePassword()) return; 
 
     if(!usernameAvailable.value){
         alert('Username already taken');
         return;
     }
-
     const user = {
         username: username.value,
         email: email.value,
         password: password.value
     }
 
-    const response = await fetch('http://127.0.0.1:5000/api/register',{
+    const response = await fetch('import.meta.env.VITE_API_BASE_URL/api/register',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify(user)

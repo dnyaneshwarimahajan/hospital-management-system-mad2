@@ -1,9 +1,20 @@
 from celery import Celery
 from datetime import timedelta
 
-celery = Celery('tasks',broker='redis://localhost:6379/0',
-                backend='redis://localhost:6379/1',
-                include=['backend_jobs.task'])
+import os
+
+REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
+
+celery = Celery(
+    'tasks',
+    broker=REDIS_URL,
+    backend=REDIS_URL,
+    include=['backend_jobs.task']
+)
+
+# celery = Celery('tasks',broker='redis://localhost:6379/0',
+#                 backend='redis://localhost:6379/1',
+#                 include=['backend_jobs.task'])
 
 celery.conf.update(timezone='Asia/Kolkata', enable_utc=False, worker_pool='solo')
 

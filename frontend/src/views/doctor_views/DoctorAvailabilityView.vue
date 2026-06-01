@@ -1,34 +1,17 @@
 <template>
   <div class="form">
-    <h3>Set Availability — Dr. {{ doctorName }}</h3>
+    <h3>Set Availability Dr. {{ doctorName }}</h3>
 
-    <div v-for="r in grid" :key="r.date"
-      style="display:flex;gap:12px;align-items:center;margin:6px 0;">
+    <div v-for="r in grid" :key="r.date" style="display:flex;gap:12px;align-items:center;margin:6px 0;">
+      <div style="width:140px;background:#eaf4ff;padding:8px;border-radius:4px;"> {{ r.date }} </div>
 
-      <div style="width:140px;background:#eaf4ff;padding:8px;border-radius:4px;">
-        {{ r.date }}
-      </div>
-
-      <div
-        class="slot"
-        :class="{ active: r.slot1 }"
-        @click="toggleSlot(r, 'slot1')"
-      >
-        08:00 - 12:00
-      </div>
-
-      <div
-        class="slot"
-        :class="{ active: r.slot2 }"
-        @click="toggleSlot(r, 'slot2')"
-      >
-        04:00 - 09:00
-      </div>
+      <div class="slot" :class="{ active: r.slot1 }" @click="toggleSlot(r, 'slot1')"> 08:00 - 12:00 </div>
+      <div class="slot":class="{ active: r.slot2 }"@click="toggleSlot(r, 'slot2')"> 04:00 - 09:00 </div>
     </div>
 
     <div style="margin-top:12px;">
       <button @click="saveAvailability">Save</button>
-      <a class="back-link" @click="$router.push('/doctor')">Back</a>
+      <RouterLink to="/doctor" class="back-link">Back</RouterLink>
     </div>
   </div>
 </template>
@@ -38,7 +21,7 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const BASE = "http://127.0.0.1:5000";
+const BASE = "import.meta.env.VITE_API_BASE_URL";
 
 const doctorName = ref(localStorage.getItem("name") || "");
 const grid = ref([]);
@@ -50,7 +33,6 @@ function authHeaders() {
   };
 }
 
-// Build next 7 days grid
 function buildGrid(existingAvailability = []) {
   const days = [];
   for (let i = 0; i < 7; i++) {

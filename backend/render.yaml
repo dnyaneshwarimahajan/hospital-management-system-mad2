@@ -1,0 +1,51 @@
+services:
+  - type: web
+    name: hms-backend
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: hms-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: hms-redis
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: SECURITY_PASSWORD_SALT
+        generateValue: true
+      - key: FRONTEND_URL
+        value: https://YOUR-APP.vercel.app  # update after Vercel deploy
+
+  - type: worker
+    name: hms-celery-worker
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: celery -A backend_jobs.celery_config worker --loglevel=info
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: hms-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: hms-redis
+          property: connectionString
+
+databases:
+  - name: hms-db
+    plan: free
+
+services:
+  - type: redis
+    name: hms-redis
+    plan: free

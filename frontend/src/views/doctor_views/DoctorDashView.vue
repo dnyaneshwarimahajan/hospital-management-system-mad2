@@ -45,17 +45,13 @@
       <h3>Assigned Patients</h3>
 
       <div v-if="patients.length">
-        <!-- ✅ FIX 1: use `p.id` not `id` -->
         <div class="assigned-row" v-for="p in patients" :key="p.id">
           <div>
             <strong>{{ p.name }}</strong><br />
             <small>{{ p.email || '' }}</small>
           </div>
           <div>
-            <!-- ✅ FIX 2: removed inline margin-left: 700px (use flexbox layout instead) -->
-            <a class="button update" @click="$router.push(`/patient-history/${p.id}`)">
-              View History
-            </a>
+            <RouterLink :to="`/patient-history/${p.id}`" class="button update">View History</RouterLink>
           </div>
         </div>
       </div>
@@ -64,11 +60,10 @@
     </div>
 
     <div class="section">
-      <p class="avail">
-        <a @click="$router.push('/doctor/availability')">Provide Availability</a>
+      <p class="avail"> 
+        <RouterLink to="/doctor/availability">Provide Availability</RouterLink>
       </p>
     </div>
-
   </div>
 </template>
 
@@ -77,7 +72,7 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const BASE = "http://127.0.0.1:5000";
+const BASE = "import.meta.env.VITE_API_BASE_URL";
 
 const doctor = ref({ name: "" });
 const weekAppointments = ref([]);
@@ -96,9 +91,9 @@ async function fetchDashboard() {
       headers: authHeaders(),
     });
     const data = await res.json();
-    doctor.value        = data.doctor;
+    doctor.value = data.doctor;
     weekAppointments.value = data.week_appointments;
-    patients.value      = data.patients;
+    patients.value = data.patients;
   } catch (err) {
     console.error("Failed to load dashboard:", err);
   }
@@ -199,8 +194,6 @@ a {
 a:hover {
   text-decoration: underline;
 }
-
-/* ✅ FIX 3: restored assigned-row as flex so name and button sit correctly */
 .assigned-row {
   display: flex;
   justify-content: space-between;

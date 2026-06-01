@@ -20,13 +20,11 @@
       <input type="password" class="input" v-model="form.password" placeholder="Enter new password" />
 
       <button type="submit" class="form-btn" :disabled="loading">
-        {{ loading ? 'Saving...' : 'Save Changes' }}
+        {{ loading ? 'Saving' : 'Save Changes' }}
       </button>
 
     </form>
-
-    <!-- Matches Jinja role check: admin → /admin, patient → /patient -->
-    <a class="back-link" @click.prevent="goBack">← Back to Dashboard</a>
+    <a class="back-link" @click.prevent="goBack">Back to Dashboard</a>
   </div>
 </template>
 
@@ -34,20 +32,20 @@
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
-const BASE   = "http://127.0.0.1:5000";
+const BASE   = "import.meta.env.VITE_API_BASE_URL";
 const router = useRouter();
 const route  = useRoute();
 const id     = route.params.id;
 
 const form = ref({
-  username:   "",
-  email:      "",
+  username:"",
+  email: "",
   contact_no: "",
-  password:   "",
+  password: "",
 });
 
-const loading    = ref(false);
-const errorMsg   = ref("");
+const loading = ref(false);
+const errorMsg = ref("");
 const successMsg = ref("");
 
 function authHeaders() {
@@ -57,15 +55,13 @@ function authHeaders() {
   };
 }
 
-// Matches Jinja: session.get('role') check
 function goBack() {
   const role = localStorage.getItem("role");
-  if (role === "admin")        router.push("/admin");
+  if (role === "admin") router.push("/admin");
   else if (role === "patient") router.push("/patient");
-  else                         router.push("/");
+  else  router.push("/");
 }
 
-// Pre-fill form from backend
 async function fetchPatient() {
   try {
     const res  = await fetch(`${BASE}/api/admin/edit-patient/${id}`, {
@@ -78,26 +74,26 @@ async function fetchPatient() {
       return;
     }
 
-    form.value.username   = data.username   || "";
-    form.value.email      = data.email      || "";
+    form.value.username = data.username || "";
+    form.value.email = data.email || "";
     form.value.contact_no = data.contact_no || "";
   } catch (err) {
-    errorMsg.value = "Network error: " + err.message;
+    errorMsg.value = "Network error:" + err.message;
   }
 }
 
 onMounted(fetchPatient);
 
 async function saveChanges() {
-  errorMsg.value   = "";
+  errorMsg.value = "";
   successMsg.value = "";
-  loading.value    = true;
+  loading.value = true;
 
   const payload = {
-    username:   form.value.username   || undefined,
-    email:      form.value.email      || undefined,
+    username: form.value.username || undefined,
+    email: form.value.email || undefined,
     contact_no: form.value.contact_no || undefined,
-    password:   form.value.password   || undefined,
+    password: form.value.password || undefined,
   };
 
   try {
@@ -111,7 +107,7 @@ async function saveChanges() {
     if (!res.ok) {
       errorMsg.value = data.message || `Error ${res.status}`;
     } else {
-      successMsg.value = "Patient updated successfully! Redirecting...";
+      successMsg.value = "Patient updated successfully! Redirecting";
       setTimeout(() => goBack(), 1200);
     }
   } catch (err) {

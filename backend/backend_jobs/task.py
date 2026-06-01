@@ -57,8 +57,11 @@ def send_monthly_reports():
 
     with app.app_context():
         today = date.today()
-        month = today.month - 1 or 12
-        year = today.year if today.month > 1 else today.year - 1
+
+        month = today.month
+        year = today.year
+        # month = today.month - 1 or 12
+        # year = today.year if today.month > 1 else today.year - 1
         month_str  = f"{year}-{str(month).zfill(2)}"
         month_name = datetime(year, month, 1).strftime("%B %Y")
 

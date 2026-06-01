@@ -43,12 +43,12 @@
       <input type="number" class="input" v-model="form.years_experience" />
 
       <button type="submit" class="btn btn-primary form-btn" :disabled="loading">
-        {{ loading ? 'Saving...' : 'Save Changes' }}
+        {{ loading ? 'Saving' : 'Save Changes' }}
       </button>
 
     </form>
 
-    <a class="back-link" @click.prevent="$router.push('/admin')">← Back to Dashboard</a>
+    <a class="back-link" @click.prevent="$router.push('/admin')">Back to Dashboard</a>
   </div>
 </template>
 
@@ -56,7 +56,7 @@
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
-const BASE = "http://127.0.0.1:5000";
+const BASE = "import.meta.env.VITE_API_BASE_URL";
 const router = useRouter();
 const route  = useRoute();
 const id     = route.params.id;
@@ -84,9 +84,6 @@ function authHeaders() {
   };
 }
 
-
-
-// Fetch departments for dropdown
 async function fetchDepartments() {
   try {
     const res = await fetch(`${BASE}/api/admin/create-doctor`, { headers: authHeaders() });
@@ -108,30 +105,30 @@ async function fetchDoctor() {
       headers: authHeaders() 
     });
     const data = await res.json();
-    form.value.username         = data.username || "";
-    form.value.email            = data.email || "";
-    form.value.contact_no       = data.contact_no || "";
-    form.value.qualifications   = data.qualifications || "";
+    form.value.username = data.username || "";
+    form.value.email= data.email || "";
+    form.value.contact_no = data.contact_no || "";
+    form.value.qualifications = data.qualifications || "";
     form.value.years_experience = data.years_experience || "";
-    form.value.department_id    = data.department_id || "";
+    form.value.department_id = data.department_id || "";
   } catch (err) {
     errorMsg.value = "Failed to load doctor data.";
   }
 }
 
 async function saveChanges() {
-  errorMsg.value  = "";
+  errorMsg.value = "";
   successMsg.value = "";
-  loading.value   = true;
+  loading.value = true;
 
   const payload = {
-    username:         form.value.username       || undefined,
-    email:            form.value.email          || undefined,
-    password:         form.value.password       || undefined,
-    department_id:    form.value.department_id  || undefined,
+    username:form.value.username || undefined,
+    email:form.value.email || undefined,
+    password: form.value.password || undefined,
+    department_id: form.value.department_id || undefined,
     new_department_name: form.value.new_department || undefined,
-    qualifications:   form.value.qualifications || undefined,
-    contact_no:       form.value.contact_no     || undefined,
+    qualifications: form.value.qualifications || undefined,
+    contact_no: form.value.contact_no || undefined,
     years_experience: form.value.years_experience || undefined,
   };
 
