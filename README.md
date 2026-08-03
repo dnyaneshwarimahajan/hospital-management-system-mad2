@@ -167,7 +167,6 @@ Authentication and login endpoints are provided by Flask-Security. Admin, doctor
 
 **Dnyaneshwari Mahajan**
 BS in Data Science & Applications, IIT Madras
-GitHub: [@your-username](https://github.com/your-username)
 
 ---
 
